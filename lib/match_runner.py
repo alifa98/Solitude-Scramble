@@ -37,13 +37,13 @@ class MatchRunner:
         if move == "CENTER":
             return "CENTER"
         if position == "NORTH":
-            return "NW" if move == "LEFT" else "NE"
+            return "NE" if move == "LEFT" else "NW"
         if position == "EAST":
-            return "NE" if move == "LEFT" else "SE"
+            return "SE" if move == "LEFT" else "NE"
         if position == "SOUTH":
-            return "SE" if move == "LEFT" else "SW"
+            return "SW" if move == "LEFT" else "SE"
         if position == "WEST":
-            return "SW" if move == "LEFT" else "NW"
+            return "NW" if move == "LEFT" else "SW"
         return "NONE"
 
     def run(self):
