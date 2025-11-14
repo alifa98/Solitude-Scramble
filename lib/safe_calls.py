@@ -1,13 +1,10 @@
-import ast
 import importlib.util
 import sys
 import traceback
 from multiprocessing import Process, Queue
 
 
-def _safe_call_wrapper(
-    queue, bot_id, bot_file_path, state, match_history, global_history
-):
+def _safe_call_wrapper(queue, bot_id, bot_file_path, state, match_history):
     """
     A target function to be run in a separate process.
     It loads the bot's code *itself* before executing.
@@ -36,7 +33,7 @@ def _safe_call_wrapper(
         bot_function = bot_module.get_action
 
         # 2. Now execute the function as before
-        move = bot_function(state, match_history, global_history)
+        move = bot_function(state, match_history)
         if move not in ["LEFT", "RIGHT", "CENTER"]:
             queue.put(("INVALID_MOVE", f"Bot returned '{move}'"))
         else:
@@ -44,10 +41,9 @@ def _safe_call_wrapper(
     except Exception:
         # This will catch errors in both loading and execution
         queue.put(("CRASH", traceback.format_exc()))
-        
-        
-        
-def safe_get_action(bot_id, bot_file_path, state, match_history, global_history, timeout=2):
+
+
+def safe_get_action(bot_id, bot_file_path, state, match_history, timeout=2):
     """
     Runs a bot's `get_action` function in an isolated process
     with a hard timeout.
@@ -58,7 +54,7 @@ def safe_get_action(bot_id, bot_file_path, state, match_history, global_history,
 
     p = Process(
         target=_safe_call_wrapper,
-        args=(q, bot_id, bot_file_path, state, match_history, global_history),
+        args=(q, bot_id, bot_file_path, state, match_history),
     )
 
     p.start()

@@ -5,7 +5,15 @@ from lib.safe_calls import safe_get_action
 
 
 class MatchRunner:
-    def __init__(self, player_ids, bot_files, platform_min_score=1, platform_max_score=6, turns_per_match=10, turn_timeout=2):
+    def __init__(
+        self,
+        player_ids,
+        bot_files,
+        platform_min_score=1,
+        platform_max_score=6,
+        turns_per_match=10,
+        turn_timeout=2,
+    ):
         self.player_ids = player_ids
         self.bot_files = bot_files  # This is a dict { bot_id: Path }
         self.positions = ["NORTH", "SOUTH", "EAST", "WEST"]
@@ -15,7 +23,6 @@ class MatchRunner:
         self.id_to_pos = {pid: pos for pos, pid in self.player_map.items()}
         self.match_scores = defaultdict(int)
         self.match_history = []
-        self.global_history_for_phase_1 = {}
         self.full_match_log = {
             "players": self.player_ids,
             "final_scores": {},
@@ -58,9 +65,11 @@ class MatchRunner:
                     "my_position": position,
                     "current_turn": turn_num,
                     "platform_scores": platform_scores,
-                    "opponent_ids": [
-                        pid for pid in self.player_ids if pid != player_id
-                    ],
+                    "opponent_positions": {
+                        pos: pid
+                        for pos, pid in self.player_map.items()
+                        if pid != player_id
+                    },
                 }
 
                 bot_file_path = self.bot_files[player_id]
@@ -70,7 +79,6 @@ class MatchRunner:
                     bot_file_path,
                     state,
                     self.match_history,
-                    self.global_history_for_phase_1,
                     timeout=self.turn_timeout,
                 )
 
@@ -98,6 +106,9 @@ class MatchRunner:
                 "platform_scores": platform_scores,
                 "moves": moves_made,
                 "scores_awarded": dict(scores_awarded),
+                "oppponent_positions": {
+                    pos: pid for pos, pid in self.player_map.items()
+                },
             }
             self.match_history.append(turn_log_entry)
             self.full_match_log["turn_data"].append(turn_log_entry)
