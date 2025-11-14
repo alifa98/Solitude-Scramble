@@ -1,0 +1,8 @@
+#python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# avoid committin the history folder or submissions
+history/
+all_submissions_*/
