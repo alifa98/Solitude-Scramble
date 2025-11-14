@@ -3,7 +3,6 @@
 
 import json
 import os
-import random
 from collections import defaultdict
 
 from rich.console import Console, Group
@@ -149,7 +148,7 @@ def main():
         TimeRemainingColumn(),
     )
     match_task = overall_progress.add_task(
-        "Running Matches", total= NUM_MATCHES * len(all_bot_ids) // 4
+        "Running Matches", total=NUM_MATCHES * len(all_bot_ids) // 4
     )
 
     content = Text()
@@ -186,7 +185,6 @@ def main():
         match_id = 0
         for current_player_ids in generated_matches:
             match_id = match_id + 1
-
 
             bots_to_run = {pid: bot_registry[pid] for pid in current_player_ids}
 
