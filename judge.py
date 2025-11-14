@@ -15,11 +15,11 @@ from rich.table import Table
 from rich.text import Text
 
 from lib.bot_loader import SafeBotLoader
+from lib.match_generator import create_fair_matches
 from lib.match_runner import MatchRunner
 
 PHASE = 1  # Current phase of the competition
 SUBMISSIONS_DIR = f"all_submissions_{PHASE}"  # Directory containing bot submissions
-NUM_MATCHES = 4  # Match for each bot to play against others
 TURNS_PER_MATCH = 10  # How many turns each match will have, randomized and repeated
 PLATFORM_MIN_SCORE = 1  # Minimum score per platform
 PLATFORM_MAX_SCORE = 6  # Maximum score per platform
@@ -132,6 +132,12 @@ def main():
 
     all_bot_ids = sorted(list(bot_registry.keys()))
 
+    # Create Fair Matches for all bots
+    match_per_player, generated_matches = create_fair_matches(
+        all_bot_ids, min_plays_per_player=3
+    )
+    NUM_MATCHES = match_per_player  # Match for each bot to play against others (Will be decided on the fly but > 3)
+
     # Setup Dashboard
     layout = make_layout()
     layout["header"].update(generate_header())
@@ -142,7 +148,9 @@ def main():
         "[progress.percentage]{task.percentage:>3.0f}%",
         TimeRemainingColumn(),
     )
-    match_task = overall_progress.add_task("Running Matches", total=NUM_MATCHES)
+    match_task = overall_progress.add_task(
+        "Running Matches", total= NUM_MATCHES * len(all_bot_ids) // 4
+    )
 
     content = Text()
     content.append(Text("Bots Loaded: ", style="bold"))
@@ -175,10 +183,10 @@ def main():
 
     # Run All Matches (Inside Live)
     with Live(layout, refresh_per_second=10, screen=True) as live:
-        for i in range(NUM_MATCHES):
-            match_id = i + 1
+        match_id = 0
+        for current_player_ids in generated_matches:
+            match_id = match_id + 1
 
-            current_player_ids = random.sample(all_bot_ids, 4)
 
             bots_to_run = {pid: bot_registry[pid] for pid in current_player_ids}
 
