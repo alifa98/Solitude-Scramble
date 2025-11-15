@@ -32,7 +32,7 @@ def _safe_call_wrapper(queue, bot_id, bot_file_path, state, match_history):
 
         bot_function = bot_module.get_action
 
-        # 2. Now execute the function as before
+        # Execute the bot's get_action function
         move = bot_function(state, match_history)
         if move not in ["LEFT", "RIGHT", "CENTER"]:
             queue.put(("INVALID_MOVE", f"Bot returned '{move}'"))

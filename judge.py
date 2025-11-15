@@ -133,7 +133,7 @@ def main():
 
     # Create Fair Matches for all bots
     match_per_player, generated_matches = create_fair_matches(
-        all_bot_ids, min_plays_per_player=3
+        all_bot_ids, min_plays_per_player=5
     )
     NUM_MATCHES = match_per_player  # Match for each bot to play against others (Will be decided on the fly but > 3)
 
@@ -171,7 +171,7 @@ def main():
 
     total_scores = defaultdict(int)
     match_counts = defaultdict(int)
-    log_messages = ["TBD...maybe logs"] * 3
+    log_messages = ["Error logs...."] * 3
 
     layout["right"].update(
         generate_leaderboard_table(total_scores, match_counts, all_bot_ids)
