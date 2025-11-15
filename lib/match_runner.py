@@ -16,11 +16,6 @@ class MatchRunner:
     ):
         self.player_ids = player_ids
         self.bot_files = bot_files  # This is a dict { bot_id: Path }
-        self.positions = ["NORTH", "SOUTH", "EAST", "WEST"]
-        self.player_map = {
-            pos: pid for pos, pid in zip(self.positions, self.player_ids)
-        }
-        self.id_to_pos = {pid: pos for pos, pid in self.player_map.items()}
         self.match_scores = defaultdict(int)
         self.match_history = []
         self.full_match_log = {
@@ -55,20 +50,23 @@ class MatchRunner:
 
     def run(self):
         for turn_num in range(1, self.turns_per_match + 1):
+
+            positions = ["NORTH", "SOUTH", "EAST", "WEST"]
+            random.shuffle(positions)
+            player_map = {pos: pid for pos, pid in zip(positions, self.player_ids)}
+
             platform_scores = self._get_platform_scores()
             moves_made = {}
             platform_choices = {}
 
-            for position, player_id in self.player_map.items():
+            for position, player_id in player_map.items():
                 state = {
                     "my_id": player_id,
                     "my_position": position,
                     "current_turn": turn_num,
                     "platform_scores": platform_scores,
                     "opponent_positions": {
-                        pos: pid
-                        for pos, pid in self.player_map.items()
-                        if pid != player_id
+                        pos: pid for pos, pid in player_map.items() if pid != player_id
                     },
                 }
 
@@ -83,7 +81,7 @@ class MatchRunner:
                 )
 
                 if status != "OK":
-                    move = "CENTER"  # Default move on failure
+                    move = "CENTER"  # TODO: Default move on error
                     self.errors.append(f"[Turn {turn_num}] {player_id}: {status}")
                 else:
                     move = move_or_err
@@ -96,7 +94,7 @@ class MatchRunner:
 
             for position, platform in platform_choices.items():
                 if platform_occupancy[platform] == 1:
-                    player_id = self.player_map[position]
+                    player_id = player_map[position]
                     score = platform_scores[platform]
                     scores_awarded[player_id] = score
                     self.match_scores[player_id] += score
@@ -104,11 +102,9 @@ class MatchRunner:
             turn_log_entry = {
                 "turn": turn_num,
                 "platform_scores": platform_scores,
-                "moves": moves_made,
+                "player_move": {player_map[pos]: moves_made[pos] for pos in positions},
                 "scores_awarded": dict(scores_awarded),
-                "oppponent_positions": {
-                    pos: pid for pos, pid in self.player_map.items()
-                },
+                "players_map": {pos: pid for pos, pid in player_map.items()},
             }
             self.match_history.append(turn_log_entry)
             self.full_match_log["turn_data"].append(turn_log_entry)
