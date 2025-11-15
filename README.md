@@ -115,29 +115,20 @@ Information about the current, immediate situation.
 
 ```python
 state = {
-    # Your bot's unique ID
-    "my_id": "student_bot_3", 
-    
-    # Your starting side for this match
-    "my_position": "NORTH",  # "NORTH", "SOUTH", "EAST", or "WEST"
-    
-    # The current turn number (1 through 10)
-    "current_turn": 7,
-    
-    # The all-important scores for this turn
+    "my_id": "bot_only_left",
+    "my_position": "WEST",
+    "current_turn": 1,
     "platform_scores": {
-        "CENTER": 6,
-        "NW": 3,
+        "CENTER": 5,
+        "NW": 2,
         "NE": 1,
-        "SW": 5,
-        "SE": 2
+        "SW": 1,
+        "SE": 4
     },
-    
-    # The IDs of the other 3 bots in this match and their starting sides
     "opponent_positions": {
-        "student_bot_8": "EAST",
-        "student_bot_21": "SOUTH",
-        "student_bot_33": "WEST"
+        "NORTH": "bot_random",
+        "SOUTH": "bot_second_best",
+        "EAST": "bot_only_center"
     }
 }
 ```
@@ -150,62 +141,62 @@ A list of data from all previous turns in this match. (This list is empty on Tur
 
 ```python
 match_history = [
-    # Data from Turn 1
+    # Turn 1 data is avalable when playing Turn 2
     {
         "turn": 1,
         "platform_scores": {
-            "CENTER": 3,
-            "NW": 3,
-            "NE": 2,
-            "SW": 5,
-            "SE": 3
-        },
-        "player_move": {
-            "bot_second_best": "LEFT",
-            "bot_greedy": "LEFT",
-            "bot_only_right": "RIGHT",
-            "bot_only_left": "LEFT"
-        },
-        "scores_awarded": {
-            "bot_second_best": 3,
-            "bot_greedy": 5
-        },
-        "players_map": {
-            "WEST": "bot_second_best",
-            "SOUTH": "bot_greedy",
-            "EAST": "bot_only_right",
-            "NORTH": "bot_only_left"
-        }
-    },
-    # Data for turn 2
-    {
-        "turn": 2,
-        "platform_scores": {
-            "CENTER": 3,
+            "CENTER": 5,
             "NW": 2,
-            "NE": 2,
-            "SW": 3,
+            "NE": 1,
+            "SW": 1,
             "SE": 4
         },
         "player_move": {
-            "bot_second_best": "CENTER",
-            "bot_greedy": "RIGHT",
-            "bot_only_right": "RIGHT",
+            "bot_random": "RIGHT",
+            "bot_second_best": "RIGHT",
+            "bot_only_center": "CENTER",
             "bot_only_left": "LEFT"
         },
         "scores_awarded": {
-            "bot_second_best": 3,
-            "bot_greedy": 3,
-            "bot_only_right": 4,
-            "bot_only_left": 2
+            "bot_second_best": 4,
+            "bot_only_center": 5
         },
         "players_map": {
-            "EAST": "bot_second_best",
-            "WEST": "bot_greedy",
-            "SOUTH": "bot_only_right",
-            "NORTH": "bot_only_left"
+            "NORTH": "bot_random",
+            "SOUTH": "bot_second_best",
+            "EAST": "bot_only_center",
+            "WEST": "bot_only_left"
+        }
+    },
+    # Turn 2 Data is added when playing Turn 3
+    {
+        "turn": 2,
+        "platform_scores": {
+            "CENTER": 6,
+            "NW": 1,
+            "NE": 6,
+            "SW": 2,
+            "SE": 5
+        },
+        "player_move": {
+            "bot_random": "RIGHT",
+            "bot_second_best": "CENTER",
+            "bot_only_center": "CENTER",
+            "bot_only_left": "LEFT"
+        },
+        "scores_awarded": {
+            "bot_random": 2,
+            "bot_only_left": 5
+        },
+        "players_map": {
+            "WEST": "bot_random",
+            "NORTH": "bot_second_best",
+            "SOUTH": "bot_only_center",
+            "EAST": "bot_only_left"
         }
     }
+    {... Turn 3 data would go here ...}
+    ...
 ]
 ```
 
