@@ -4,6 +4,7 @@
 import json
 import os
 from collections import defaultdict
+from time import sleep
 
 from rich.console import Console, Group
 from rich.layout import Layout
@@ -130,6 +131,8 @@ def main():
         return
 
     all_bot_ids = sorted(list(bot_registry.keys()))
+
+    sleep(5)  # Pause to let user read
 
     # Create Fair Matches for all bots
     match_per_player, generated_matches = create_fair_matches(
