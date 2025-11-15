@@ -212,7 +212,7 @@ A leaderboard will be published. The Phase 1 results will be given to you you as
 
 Phase 2: The Adaptation
 
-You can now resubmit your code. Your bot can now analyze the Phase 1 data from global_history. (you can have this in your code as a json file or hardcoded data structure).
+You can now resubmit your code. Your bot can now analyze the Phase 1 data from global_history. (you can have this in your code as a hardcoded data structure, or analyze it from a file offline to derive strategies for your bot).
 
 We run another random matches.
 
