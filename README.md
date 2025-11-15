@@ -153,37 +153,61 @@ match_history = [
     # Data from Turn 1
     {
         "turn": 1,
-        "platform_scores": {"CENTER": 4, "NW": 6, ...},
-        "moves": {
-            "NORTH": "CENTER", # This was you
-            "SOUTH": "LEFT",
-            "EAST": "CENTER",
-            "WEST": "RIGHT"
+        "platform_scores": {
+            "CENTER": 3,
+            "NW": 3,
+            "NE": 2,
+            "SW": 5,
+            "SE": 3
+        },
+        "player_move": {
+            "bot_second_best": "LEFT",
+            "bot_greedy": "LEFT",
+            "bot_only_right": "RIGHT",
+            "bot_only_left": "LEFT"
         },
         "scores_awarded": {
-            "NORTH": 0,  # You collided with EAST
-            "SOUTH": 2,
-            "EAST": 0,
-            "WEST": 6
+            "bot_second_best": 3,
+            "bot_greedy": 5
         },
-        "opponent_positions": {
-        "student_bot_8": "EAST",
-        "student_bot_21": "SOUTH",
-        "student_bot_33": "WEST"
-    }
-        
+        "players_map": {
+            "WEST": "bot_second_best",
+            "SOUTH": "bot_greedy",
+            "EAST": "bot_only_right",
+            "NORTH": "bot_only_left"
+        }
     },
-    # Data from Turn 2
+    # Data for turn 2
     {
         "turn": 2,
-        "platform_scores": {"CENTER": 1, "NW": 2, ...},
-        "moves": { ... },
-        "scores_awarded": { ... },
-        "opponent_positions": { ... }
+        "platform_scores": {
+            "CENTER": 3,
+            "NW": 2,
+            "NE": 2,
+            "SW": 3,
+            "SE": 4
+        },
+        "player_move": {
+            "bot_second_best": "CENTER",
+            "bot_greedy": "RIGHT",
+            "bot_only_right": "RIGHT",
+            "bot_only_left": "LEFT"
+        },
+        "scores_awarded": {
+            "bot_second_best": 3,
+            "bot_greedy": 3,
+            "bot_only_right": 4,
+            "bot_only_left": 2
+        },
+        "players_map": {
+            "EAST": "bot_second_best",
+            "WEST": "bot_greedy",
+            "SOUTH": "bot_only_right",
+            "NORTH": "bot_only_left"
+        }
     }
 ]
 ```
-
 
 ## The Competition: A Phased League
 

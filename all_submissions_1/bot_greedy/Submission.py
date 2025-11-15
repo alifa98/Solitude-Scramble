@@ -1,4 +1,4 @@
-def get_action(state, match_history, global_history):
+def get_action(state, match_history):
     
     my_pos = state["my_position"]
     scores = state["platform_scores"]
@@ -25,4 +25,4 @@ def get_action(state, match_history, global_history):
     # This finds the key (move) with the maximum value (score)
     best_move = sorted(my_options, key=my_options.get)
     
-    return best_move[0]
+    return best_move[-1] # Return the move with the highest score
