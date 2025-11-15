@@ -81,13 +81,16 @@ class MatchRunner:
                 )
 
                 if status != "OK":
-                    move = "CENTER"  # TODO: Default move on error
+                    move = "NONE"  # TODO: Default move on error
                     self.errors.append(f"[Turn {turn_num}] {player_id}: {status}")
                 else:
                     move = move_or_err
 
                 moves_made[position] = move
-                platform_choices[position] = self._get_platform_for_move(position, move)
+                if move in ["LEFT", "RIGHT", "CENTER"]: # ignore invalid moves so the score is not assigned
+                    platform_choices[position] = self._get_platform_for_move(
+                        position, move
+                    )
 
             platform_occupancy = Counter(platform_choices.values())
             scores_awarded = defaultdict(int)
