@@ -20,6 +20,7 @@ from lib.match_runner import MatchRunner
 
 PHASE = 1  # Current phase of the competition
 SUBMISSIONS_DIR = f"all_submissions_{PHASE}"  # Directory containing bot submissions
+# SUBMISSIONS_DIR = f"all_submissions_STRESS_TEST"  # Directory containing bot submissions
 TURNS_PER_MATCH = 10  # How many turns each match will have, randomized and repeated
 PLATFORM_MIN_SCORE = 1  # Minimum score per platform
 PLATFORM_MAX_SCORE = 6  # Maximum score per platform
