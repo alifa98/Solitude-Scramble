@@ -307,3 +307,16 @@ Does bot_8 always go to the Center on Turn 1? Exploit that.
 Do bot_21 and bot_33 have a history of colliding on the SW platform? Maybe you can go CENTER safely.
 
 Good luck.
+
+## How to run locally
+
+```bash
+git clone <repo-url>
+cd solitude-scramble
+pip install -r requirements.txt
+# Put submissions in the all_submissions_{i} folder.
+python judge.py
+```
+
+You will get a leaderboard printed in the console but the main thing is that you see a history json file created in the `historiy` folder. You can use this to visualize matches.
+

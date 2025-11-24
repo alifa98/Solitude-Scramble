@@ -1,0 +1,3 @@
+rich==13.9.4
+rich-argparse==1.7.1
+rich-toolkit==0.15.1
