@@ -90,7 +90,7 @@ After scoring, the turn ends. All bots return to their home sides, and a new tur
 
 ## The Bot API: What You Must Submit
 
-You must submit your code that has one specific Python file named Submission.py. This file must contain a function with the following exact signature:
+You must submit your code that has one specific Python file named ``Submission.py`. This file must contain a function with the following exact signature:
 
 ```python
 def get_action(state, match_history):
@@ -319,4 +319,3 @@ python judge.py
 ```
 
 You will get a leaderboard printed in the console but the main thing is that you see a history json file created in the `historiy` folder. You can use this to visualize matches.
-
